@@ -17,9 +17,13 @@ router.post('/api/comment/new/:postId', async (req: Request, res: Response, next
         content
     });
     await newComment.save();
-    const newPost = await Post.findOneAndUpdate({ _id: postId })
+    const updatedPost = await Post.findOneAndUpdate(
+        { _id: postId },
+        {$push: { comments: newComment }},
+        {new: true}
+        )
 
-    res.status(201).send(newComment);
+    res.status(201).send(updatedPost);
 })
 
 export {router as newCommentRouter}

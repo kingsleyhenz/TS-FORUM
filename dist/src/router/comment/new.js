@@ -31,6 +31,6 @@ router.post('/api/comment/new/:postId', (req, res, next) => __awaiter(void 0, vo
         content
     });
     yield newComment.save();
-    const newPost = yield post_1.default.findOneAndUpdate({ _id: postId });
-    res.status(201).send(newComment);
+    const updatedPost = yield post_1.default.findOneAndUpdate({ _id: postId }, { $push: { comments: newComment } }, { new: true });
+    res.status(201).send(updatedPost);
 }));

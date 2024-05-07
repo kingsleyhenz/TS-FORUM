@@ -45,6 +45,11 @@ app.use((0, body_parser_1.urlencoded)({
     extended: true
 }));
 app.use((0, body_parser_1.json)());
+app.use((error, req, res, next) => {
+    if (error.status)
+        return res.status(error.status).json({ message: error.message });
+    res.status(500).json({ message: 'Something went wrong' });
+});
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     if (!process.env.DB_URI)
         throw new Error("DB_URI is required");
@@ -54,6 +59,6 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         throw new Error("Database Error");
     }
-    app.listen(5050, () => console.log("Server is Active on port 5050"));
+    app.listen(8000, () => console.log("Server is Active on port 8000"));
 });
 start();

@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.newCommentRouter = void 0;
 const express_1 = require("express");
-const comment_1 = __importDefault(require("src/models/comment"));
-const post_1 = __importDefault(require("./../../models/post"));
+const comment_1 = __importDefault(require("../../models/comment"));
+const post_1 = __importDefault(require("../../models/post"));
 const router = (0, express_1.Router)();
 exports.newCommentRouter = router;
 router.post('/api/comment/new/:postId', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

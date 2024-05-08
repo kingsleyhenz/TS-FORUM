@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePostRouter = void 0;
 const express_1 = require("express");
-const post_1 = __importDefault(require("src/models/post"));
+const post_1 = __importDefault(require("../../models/post"));
 const router = (0, express_1.Router)();
 exports.deletePostRouter = router;
 router.delete('/api/post/delete/:id', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

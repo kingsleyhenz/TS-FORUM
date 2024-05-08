@@ -40,15 +40,27 @@ dotenv.config();
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = require("body-parser");
 const mongoose_1 = __importDefault(require("mongoose"));
+const router_1 = require("./router");
 const app = (0, express_1.default)();
 app.use((0, body_parser_1.urlencoded)({
-    extended: true
+    extended: true,
 }));
 app.use((0, body_parser_1.json)());
+app.use(router_1.newPostRouter);
+app.use(router_1.deletePostRouter);
+app.use(router_1.updatePostRouter);
+app.use(router_1.showPostRouter);
+app.use(router_1.newCommentRouter);
+app.use(router_1.deleteCommentRouter);
+app.all('*', (req, res, next) => {
+    const error = new Error('not found');
+    error.status = 404;
+    next(error);
+});
 app.use((error, req, res, next) => {
     if (error.status)
         return res.status(error.status).json({ message: error.message });
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(500).json({ message: "Something went wrong" });
 });
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     if (!process.env.DB_URI)

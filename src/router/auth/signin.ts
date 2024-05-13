@@ -1,5 +1,6 @@
 import { Router, Response, Request, NextFunction } from 'express'
 import User from '../../models/user';
+import { authenticationService } from '../../../common';
 
 const router = Router();
 

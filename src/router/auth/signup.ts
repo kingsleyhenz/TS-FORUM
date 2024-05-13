@@ -1,5 +1,6 @@
 import { Router, Response, Request, NextFunction } from 'express'
 import User from '../../models/user';
+import jwt  from 'jsonwebtoken';
 
 const router = Router();
 
@@ -13,6 +14,10 @@ router.post('/signup', async(req: Request, res: Response, next: NextFunction) =>
         password,
     })
     await newUser.save();
+
+    req.session = {
+        jwt: jwt.sign({ email, userId: user._id }, process.env. JWT_KEY!)
+    }
     res.status(201).send(newUser)
 })
 

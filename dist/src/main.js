@@ -41,22 +41,30 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = require("body-parser");
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
+const cookie_session_1 = __importDefault(require("cookie-session"));
 const router_1 = require("./router");
+const common_1 = require("../common");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     origin: "*",
     optionsSuccessStatus: 200,
 }));
+app.set('trust proxy', true);
 app.use((0, body_parser_1.urlencoded)({
-    extended: true,
+    extended: false,
 }));
 app.use((0, body_parser_1.json)());
-app.use(router_1.newPostRouter);
-app.use(router_1.deletePostRouter);
-app.use(router_1.updatePostRouter);
+app.use((0, cookie_session_1.default)({
+    signed: false,
+    secure: false
+}));
+app.use(common_1.currentUser);
+app.use(common_1.requireAuth, router_1.newPostRouter);
+app.use(common_1.requireAuth, router_1.deletePostRouter);
+app.use(common_1.requireAuth, router_1.updatePostRouter);
 app.use(router_1.showPostRouter);
-app.use(router_1.newCommentRouter);
-app.use(router_1.deleteCommentRouter);
+app.use(common_1.requireAuth, router_1.newCommentRouter);
+app.use(common_1.requireAuth, router_1.deleteCommentRouter);
 app.all('*', (req, res, next) => {
     const error = new Error('not found');
     error.status = 404;
@@ -70,6 +78,8 @@ app.use((error, req, res, next) => {
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     if (!process.env.DB_URI)
         throw new Error("DB_URI is required");
+    if (!process.env.JWT_KEY)
+        throw new Error("JWT_KEY is required");
     try {
         yield mongoose_1.default.connect(process.env.DB_URI);
     }

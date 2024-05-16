@@ -14,13 +14,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./post/new"), exports);
-__exportStar(require("./post/delete"), exports);
-__exportStar(require("./post/get"), exports);
-__exportStar(require("./post/update"), exports);
-__exportStar(require("./comment/delete"), exports);
-__exportStar(require("./comment/new"), exports);
-__exportStar(require("./auth/currentUser"), exports);
-__exportStar(require("./auth/signup"), exports);
-__exportStar(require("./auth/signin"), exports);
-__exportStar(require("./auth/signout"), exports);
+__exportStar(require("./src/services/authentication"), exports);
+__exportStar(require("./src/middlewares/currentUser"), exports);
+__exportStar(require("./src/middlewares/req-auth"), exports);

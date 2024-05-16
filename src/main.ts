@@ -13,7 +13,7 @@ import {
   newCommentRouter,
   deleteCommentRouter,
 } from "./router";
-import { requireAuth } from "../common";
+import { currentUser, requireAuth } from "../common";
 
 const app = express();
 
@@ -39,7 +39,9 @@ app.use(cookieSession({
   secure: false
 }))
 
-app.use(requireAuth ,newPostRouter)
+app.use(currentUser);
+
+app.use(requireAuth ,newPostRouter);
 app.use(requireAuth ,deletePostRouter);
 app.use(requireAuth ,updatePostRouter);
 app.use(showPostRouter);
